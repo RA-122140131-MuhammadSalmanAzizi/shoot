@@ -6,14 +6,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const announcementText = document.getElementById("announcement-text");
     const finalDetails = document.getElementById("final-details");
 
-    // Fungsi random posisi aman
-    function isSafePosition(x, y, yesBtnRect) {
-        const minDistance = 150;
-        const dx = x - (yesBtnRect.left + yesBtnRect.width / 2);
-        const dy = y - (yesBtnRect.top + yesBtnRect.height / 2);
-        return Math.sqrt(dx * dx + dy * dy) > minDistance;
+    // Simpan teks asli tombol "Nggak"
+    const noBtnOriginalText = noBtn.innerText;
+
+    // Fungsi acak mengganti teks tombol "Nggak"
+    function randomChangeNoButtonText() {
+        if (Math.random() < 0.5) {
+            noBtn.innerText = "Eits..";
+            setTimeout(() => {
+                noBtn.innerText = noBtnOriginalText;
+            }, 800); // Kembali ke teks asli setelah 0.8 detik
+        }
     }
 
+    // Fungsi pindah posisi tombol "Nggak"
     function moveNoButton() {
         const yesBtnRect = yesBtn.getBoundingClientRect();
         let newX, newY;
@@ -29,9 +35,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    noBtn.addEventListener("mouseenter", moveNoButton);
+    // Cek apakah posisi aman dari tombol "Mau"
+    function isSafePosition(x, y, yesBtnRect) {
+        const minDistance = 150;
+        const dx = x - (yesBtnRect.left + yesBtnRect.width / 2);
+        const dy = y - (yesBtnRect.top + yesBtnRect.height / 2);
+        return Math.sqrt(dx * dx + dy * dy) > minDistance;
+    }
+
+    // Event listener untuk tombol "Nggak"
+    noBtn.addEventListener("mouseenter", () => {
+        randomChangeNoButtonText(); // Ganti teks acak
+        moveNoButton();              // Pindahkan tombol
+    });
+
     noBtn.addEventListener("click", moveNoButton);
 
+    // Event klik tombol "Mau"
     yesBtn.addEventListener("click", () => {
         // Fade out kontainer awal
         gsap.to(mainContainer, {
