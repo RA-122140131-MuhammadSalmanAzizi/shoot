@@ -9,17 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Simpan teks asli tombol "Nggak"
     const noBtnOriginalText = noBtn.innerText;
 
-    // Fungsi acak mengganti teks tombol "Nggak"
-    function randomChangeNoButtonText() {
-        if (Math.random() < 0.5) {
-            noBtn.innerText = "Eits..";
-            setTimeout(() => {
-                noBtn.innerText = noBtnOriginalText;
-            }, 800); // Kembali ke teks asli setelah 0.8 detik
-        }
+    // Fungsi mengganti teks tombol "Nggak" selalu jadi "Eits.."
+    function changeNoButtonTextToEits() {
+        noBtn.innerText = "Eits..";
+        setTimeout(() => {
+            noBtn.innerText = noBtnOriginalText;
+        }, 800); // Kembali ke teks asli setelah 0.8 detik
     }
 
-    // Fungsi pindah posisi tombol "Nggak"
+    // Fungsi memindahkan posisi tombol "Nggak"
     function moveNoButton() {
         const yesBtnRect = yesBtn.getBoundingClientRect();
         let newX, newY;
@@ -35,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Cek apakah posisi aman dari tombol "Mau"
+    // Cek apakah lokasi aman untuk tombol "Nggak"
     function isSafePosition(x, y, yesBtnRect) {
         const minDistance = 150;
         const dx = x - (yesBtnRect.left + yesBtnRect.width / 2);
@@ -45,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Event listener untuk tombol "Nggak"
     noBtn.addEventListener("mouseenter", () => {
-        randomChangeNoButtonText(); // Ganti teks acak
-        moveNoButton();              // Pindahkan tombol
+        changeNoButtonTextToEits(); // Selalu ganti teks
+        moveNoButton();             // Pindahkan tombol
     });
 
     noBtn.addEventListener("click", moveNoButton);
